@@ -32,6 +32,8 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+# El ejemplo sí se versiona: el README dice copiarlo a .env
+!.env.example
 
 # vercel
 .vercel
@@ -39,7 +41,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-.env
 test-results/
 playwright-report/
 tsconfig.tsbuildinfo
