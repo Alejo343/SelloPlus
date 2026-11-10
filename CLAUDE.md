@@ -1,4 +1,4 @@
-# Sistema de fidelización — contexto del proyecto
+# SelloPlus — contexto del proyecto
 
 Tarjeta de sellos digital en el wallet del celular, para locales gastronómicos. Réplica del
 sistema que venden `@menuly.ar` y `@marco.scaine` en Instagram.
