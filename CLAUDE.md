@@ -36,6 +36,9 @@ Antes de escribir una pantalla, leer las guías de rutas y formularios en
 - **WhatsApp con links `wa.me`** que el local dispara a mano. Cloud API más adelante.
 - **Funcional antes que bonito.** Nada de estilos hasta la Fase 8. Las pantallas son HTML crudo
   a propósito; no "mejorar" el diseño sobre la marcha.
+- **Rol frente a los datos: SelloPlus es ENCARGADO**, cada local es el Responsable (Ley 1581 de
+  2012). La autorización del formulario se pide **a nombre del local**, nunca de SelloPlus. Si un
+  local se va, se le entrega su base y se borra. No usar datos de un local para fines propios.
 
 ## Reglas al trabajar acá
 

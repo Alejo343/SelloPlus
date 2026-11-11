@@ -127,12 +127,29 @@ No son opcionales: el producto **es** una base de datos de personas.
 | RL-03 | Política de tratamiento de datos accesible, que diga quién responde, para qué se usan los datos y cómo pedir baja o corrección | 2 |
 | RL-04 | Vía efectiva para que el titular consulte, corrija o elimine sus datos | 5 |
 | RL-05 | Mecanismo de baja en todos los mensajes de marketing, y respetarlo | 5 |
-| RL-06 | Definir si operas como **responsable** o como **encargado** de los datos, y reflejarlo en el contrato con el local | 2 |
+| RL-06 | **DECIDIDO (2026-11-11): actúas como ENCARGADO.** La base es del local, tú solo la procesas por su cuenta. Hace falta un contrato de transmisión de datos con cada local | 2 |
 | RL-07 | Evaluar si corresponde registrar las bases en el **RNBD** de la SIC | 2 |
 | RL-08 | Política de retención: cuánto tiempo se guardan los datos de un cliente inactivo | 5 |
+| RL-09 | **DECIDIDO (2026-11-11):** si un local deja de usar el servicio, se le entrega su base y se borra de nuestro lado. Hay que declararlo en la política y en el contrato | 2 |
+| RL-10 | Si el servidor está fuera de Colombia, los datos salen del país: hay que cubrir la transmisión internacional en el contrato con cada local. **Pendiente de confirmar dónde está el VPS** | 2 |
 
-**RL-06 es una decisión tuya y bloquea la redacción de la política.** Si la base es tuya, respondes
-tú ante la SIC; si es del local y tú solo la procesas, responde el local. Cambia los contratos.
+**RL-06 quedó decidido: ENCARGADO.** Consecuencias que se arrastran al resto del sistema:
+
+- La autorización del cliente se pide **a nombre del local**, no de SelloPlus. En el formulario el
+  titular le está dando sus datos a "La Esquina", no a una empresa que no conoce. Es también lo
+  que menos fricción genera y lo que más gente completa.
+- Cada local es quien responde ante la SIC por el uso que le dé a su base. A nosotros nos
+  corresponde la seguridad de la plataforma y la confidencialidad.
+- El registro en el RNBD, cuando aplique, le corresponde a cada local, no a nosotros.
+- La política de tratamiento tiene que nombrar al local como Responsable y a SelloPlus como
+  Encargado, con los datos de contacto de los dos.
+- Hace falta un **contrato de transmisión de datos** por local. Eso no es una pantalla: es un
+  documento aparte que conviene que revise un abogado.
+- No se pueden usar los datos de un local para nada propio sin una autorización adicional y
+  específica. Si algún día se quiere una red de beneficios entre locales, es otro producto y otra
+  autorización.
+
+Nada de esto impide nada técnicamente, pero define el texto del formulario de la Fase 2.
 
 ---
 
