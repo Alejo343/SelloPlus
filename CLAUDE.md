@@ -14,7 +14,19 @@ Los reels originales con sus transcripciones están en
 
 ## Estado
 
-Fase 0 (cimientos) terminada el 2026-11-10. Siguiente: **Fase 1 — núcleo de sellos**.
+Fases 0 (cimientos) y 1 (núcleo de sellos) terminadas. Siguiente: **Fase 2 — pantallas
+públicas funcionales**, en HTML crudo y sin estilos.
+
+126 pruebas en verde: 75 unitarias del dominio y 51 de integración contra la base.
+
+Lo que ya existe:
+
+- `src/dominio/` — reglas puras: `fechas.ts`, `sellos.ts`, `telefono.ts`, `inactividad.ts`
+- `src/servicios/` — lo que toca la base: `tags.ts`, `clientes.ts`, `sellos.ts`
+- `src/lib/sesion-cliente.ts` — cookie firmada que reconoce al cliente entre visitas
+
+Antes de escribir una pantalla, leer las guías de rutas y formularios en
+`node_modules/next/dist/docs/01-app/`: esta versión de Next no es la que conoces de memoria.
 
 ## Decisiones tomadas
 

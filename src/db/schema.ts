@@ -17,6 +17,7 @@
 import {
   boolean,
   date,
+  foreignKey,
   index,
   integer,
   pgEnum,
@@ -196,6 +197,16 @@ export const sellos = pgTable(
     usuarioLocalId: uuid('usuario_local_id').references(() => usuariosLocal.id, {
       onDelete: 'set null',
     }),
+    /**
+     * RN-02: el canje que consumió este sello, o null si está disponible.
+     *
+     * Se marca el sello en vez de comparar fechas con el último canje. Así
+     * "¿cuántos sellos tiene?" es contar los que tienen null, sin aritmética de
+     * fechas, y queda registrado exactamente qué sellos pagaron qué premio.
+     * La referencia se declara abajo con `foreignKey` porque `canjes` se define
+     * después de esta tabla.
+     */
+    canjeId: uuid('canje_id'),
     ip: text('ip'),
     creadoEn: timestamp('creado_en', { withTimezone: true }).notNull().defaultNow(),
   },
@@ -207,6 +218,13 @@ export const sellos = pgTable(
     unique('sellos_cliente_fecha_unico').on(t.clienteId, t.fecha),
     index('sellos_local_fecha_idx').on(t.localId, t.fecha),
     index('sellos_cliente_idx').on(t.clienteId),
+    /** Para contar los sellos disponibles de un cliente (los que tienen canje_id nulo) */
+    index('sellos_cliente_canje_idx').on(t.clienteId, t.canjeId),
+    foreignKey({
+      columns: [t.canjeId],
+      foreignColumns: [canjes.id],
+      name: 'sellos_canje_fk',
+    }).onDelete('set null'),
   ],
 );
 

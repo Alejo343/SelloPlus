@@ -100,7 +100,7 @@ miedo.
 
 ---
 
-### Fase 1 — Núcleo de sellos (sin interfaz)
+### Fase 1 — Núcleo de sellos (sin interfaz) ✅ terminada el 2026-11-11
 *El corazón del sistema, probado antes de que exista una sola pantalla linda.*
 
 **Entregables**
