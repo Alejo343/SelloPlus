@@ -14,12 +14,18 @@ Los reels originales con sus transcripciones están en
 
 ## Estado
 
-Fases 0, 1 y 2 terminadas. Siguiente: **Fase 3 — panel del local**.
+Fases 0, 1, 2 y 3 terminadas. Siguiente: **Fase 4 — tarjeta en Google Wallet**, que necesita que
+David tenga aprobada la cuenta de emisor.
 
-135 pruebas en verde: 75 unitarias, 51 de integración y 9 de punta a punta en móvil simulado.
+191 pruebas en verde: 102 unitarias, 68 de integración y 21 de punta a punta en móvil simulado.
 
-Pantallas que ya funcionan: `/t/[token]` (el tap), `/c/[slug]/alta`, `/c/[slug]/tarjeta` y
-`/c/[slug]/politica`. Sin estilos a propósito; el diseño es la Fase 8.
+Pantallas del cliente: `/t/[token]` (el tap), `/c/[slug]/alta`, `/c/[slug]/tarjeta`,
+`/c/[slug]/politica`. Panel del local: `/panel`, `/panel/entrar`, `/panel/clientes`,
+`/panel/clientes/[id]`, `/panel/programa`, `/panel/qr`. Sin estilos a propósito; el diseño es la
+Fase 8.
+
+Credenciales de la semilla para el panel (solo desarrollo):
+`dueno@laesquina.test` y `dueno@cafevecino.test`, contraseña `selloplus2026`.
 
 Lo que ya existe:
 
@@ -30,6 +36,15 @@ Lo que ya existe:
 En esta versión de Next, `params`, `searchParams` y `cookies()` son **promesas**: hay que
 esperarlas. Antes de escribir una pantalla nueva, leer la guía correspondiente en
 `node_modules/next/dist/docs/01-app/`.
+
+La **tasa de retorno** tiene una definición concreta, escrita en `src/dominio/metricas.ts`: de los
+clientes que ya estaban ANTES del período, cuántos sumaron un sello DURANTE el período. No cambiar
+esa definición sin leer el porqué: excluir del denominador a los recién llegados es lo que evita
+que la tasa se hunda justo en los meses en que el local crece.
+
+Las pruebas de punta a punta comparten la base de desarrollo y la semilla corre una sola vez, así
+que **no usar conteos absolutos** en las aserciones: las pruebas del cliente dan de alta clientes
+que luego ve el panel. Consultar el número en la base dentro de la prueba.
 
 La página del tap suma un sello en un GET, y eso es deliberado: un chip NFC solo puede abrir una
 URL, no enviar un POST. Lo que lo hace seguro es la regla de un sello por día, que vuelve la

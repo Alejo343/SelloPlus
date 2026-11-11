@@ -14,6 +14,7 @@
 import 'dotenv/config';
 
 import { crearConexion } from '../src/db';
+import { hashearContrasena } from '../src/lib/contrasena';
 import {
   clientes,
   locales,
@@ -25,6 +26,13 @@ import {
 } from '../src/db/schema';
 
 const VERSION_CONSENTIMIENTO = process.env.CONSENTIMIENTO_VERSION ?? '2026-11-v1';
+
+/**
+ * Contraseña de los usuarios de prueba del panel. Es solo para desarrollo: la
+ * semilla nunca se corre contra datos reales, y el .env de producción tendría
+ * usuarios creados de otra forma.
+ */
+const CONTRASENA_DEMO = 'selloplus2026';
 
 /** Fecha ISO (solo día) desplazada N días desde hoy. */
 function diaRelativo(dias: number): string {
@@ -75,11 +83,12 @@ async function sembrar() {
       beneficioBienvenida: 'Un café de regalo por unirte al club',
     });
 
+    const hashDemo = await hashearContrasena(CONTRASENA_DEMO);
+
     await db.insert(usuariosLocal).values({
       localId: esquina.id,
       email: 'dueno@laesquina.test',
-      // Marcador: el hash real se define en la Fase 3, con el login.
-      hashContrasena: 'pendiente-fase-3',
+      hashContrasena: hashDemo,
       nombre: 'Dueño de La Esquina',
     });
 
@@ -225,7 +234,7 @@ async function sembrar() {
     await db.insert(usuariosLocal).values({
       localId: vecino.id,
       email: 'dueno@cafevecino.test',
-      hashContrasena: 'pendiente-fase-3',
+      hashContrasena: hashDemo,
       nombre: 'Dueño de Café Vecino',
     });
 
@@ -263,6 +272,9 @@ async function sembrar() {
     console.log('  Carlos Cumple y Sofía Vecina cumplen en 3 días.');
     console.log('  Pedro Baja pidió la baja y no debe recibir mensajes.');
     console.log('  Marta y Sofía comparten teléfono en locales distintos, a propósito.');
+    console.log('');
+    console.log(`  Panel: dueno@laesquina.test / ${CONTRASENA_DEMO}`);
+    console.log(`         dueno@cafevecino.test / ${CONTRASENA_DEMO}`);
   } finally {
     await sql.end();
   }

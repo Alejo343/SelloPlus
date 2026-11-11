@@ -146,7 +146,7 @@ Puedes abrir una URL en tu celular, darte de alta y ver tu sello. Ya es demostra
 
 ---
 
-### Fase 3 — Panel del local
+### Fase 3 — Panel del local ✅ terminada el 2026-11-11
 
 **Entregables**
 - Login por local (email + contraseña, sesión en cookie). Nada de usuarios por rol todavía.
@@ -156,7 +156,9 @@ Puedes abrir una URL en tu celular, darte de alta y ver tu sello. Ya es demostra
 - Pantalla "sumar sello a mano" para cuando falle el chip.
 - Configuración del programa: objetivo de sellos, premio, beneficio de bienvenida, datos y
   coordenadas del local.
-- Generación del QR del local en PDF para imprimir.
+- Generación del QR del local para imprimir. **Desvío respecto a lo planeado**: en vez de generar
+  un PDF en el servidor, es una página con estilos de impresión que el dueño guarda como PDF desde
+  su navegador. Evita una dependencia de PDF y funciona igual desde el celular.
 
 **Pruebas**
 - Integración: la tasa de fidelización sobre datos de semilla da un número conocido a mano.

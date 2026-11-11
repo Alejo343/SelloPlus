@@ -5,6 +5,7 @@
  */
 
 import { clientes, locales, programas, tags, usuariosLocal } from '../../src/db/schema';
+import { hashearContrasena } from '../../src/lib/contrasena';
 import type { BaseDeDatos } from '../../src/servicios/tipos';
 
 export interface LocalDePrueba {
@@ -45,7 +46,7 @@ export async function crearLocalDePrueba(
     .values({
       localId: local.id,
       email: `${slug}@prueba.test`,
-      hashContrasena: 'pendiente-fase-3',
+      hashContrasena: await hashearContrasena('contrasena-de-prueba'),
       nombre: `Dueño de ${slug}`,
     })
     .returning({ id: usuariosLocal.id });

@@ -79,3 +79,15 @@ label {
   letter-spacing: 0.2rem;
   word-break: break-all;
 }
+
+/* Página de códigos QR: una hoja por código al imprimir. */
+@media print {
+  .sin-imprimir {
+    display: none;
+  }
+
+  .hoja-qr {
+    page-break-after: always;
+    text-align: center;
+  }
+}
