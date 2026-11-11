@@ -1,4 +1,9 @@
+import 'dotenv/config';
+
 import { expect, test } from '@playwright/test';
+
+import { crearConexion } from '../../src/db';
+import { procesarCola } from '../../src/servicios/wallet/cola';
 
 /**
  * Los recorridos del cliente, en un móvil simulado.
@@ -155,4 +160,34 @@ test('la política es alcanzable desde el formulario, antes de aceptar', async (
   const enlace = page.getByRole('link', { name: /cómo tratamos tus datos/i });
   await expect(enlace).toBeVisible();
   await expect(enlace).toHaveAttribute('href', '/c/la-esquina/politica');
+});
+
+test('tras procesar la cola, aparece el botón de guardar en Google Wallet', async ({ page }) => {
+  await page.goto(`/t/${TAG}`);
+  await page.getByRole('link', { name: /unirme al club/i }).click();
+  await page.getByLabel('Tu nombre').fill('Cliente Con Wallet');
+  await page.getByLabel('Tu WhatsApp').fill(telefonoUnico());
+  await page.getByRole('checkbox').check();
+  await page.getByRole('button', { name: /unirme al club/i }).click();
+  await expect(page).toHaveURL(/\/c\/la-esquina\/tarjeta$/);
+
+  // Recién dado de alta, la tarjeta del wallet todavía no existe: el alta solo
+  // encola, para que el tap no tenga que esperar a Google (RNF-01).
+  await expect(page.getByRole('link', { name: /google wallet/i })).toHaveCount(0);
+
+  // Es lo que hace el cron cada minuto.
+  const { cliente: sql, db } = crearConexion(process.env.DATABASE_URL, 1);
+  try {
+    const resultado = await procesarCola({}, db);
+    expect(resultado.fallidos).toBe(0);
+  } finally {
+    await sql.end();
+  }
+
+  await page.reload();
+  const boton = page.getByRole('link', { name: /google wallet/i });
+  await expect(boton).toBeVisible();
+
+  // En modo simulado el enlace es falso a propósito, y se tiene que notar.
+  await expect(boton).toHaveAttribute('href', /simulado/);
 });

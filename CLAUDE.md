@@ -14,10 +14,20 @@ Los reels originales con sus transcripciones están en
 
 ## Estado
 
-Fases 0, 1, 2 y 3 terminadas. Siguiente: **Fase 4 — tarjeta en Google Wallet**, que necesita que
-David tenga aprobada la cuenta de emisor.
+Fases 0 a 3 y **4A** terminadas. Siguiente: **Fase 5 — mensajes para que vuelvan** (la 4B espera
+la cuenta de emisor de David).
 
-191 pruebas en verde: 102 unitarias, 68 de integración y 21 de punta a punta en móvil simulado.
+244 pruebas en verde: 135 unitarias, 87 de integración y 22 de punta a punta en móvil simulado.
+
+**Google Wallet funciona en modo simulado.** El emisor se elige por la presencia de credenciales:
+sin `WALLET_ISSUER_ID`, `WALLET_CUENTA_SERVICIO_EMAIL` y `WALLET_CLAVE_PRIVADA` en el `.env`, se
+usa el emisor simulado, que registra lo que enviaría y devuelve enlaces con «simulado» en la URL
+para que se note si alguno llega a producción. La implementación real está escrita según la
+documentación pero **no se ha probado contra la API de Google**: eso es la Fase 4B.
+
+Sumar un sello **encola**, no llama a Google: `npm run wallet:procesar` drena la cola y está
+pensado para un cron cada minuto. Google no tiene SLA y el tap tiene que responder en menos de
+1,5 s delante del cliente.
 
 Pantallas del cliente: `/t/[token]` (el tap), `/c/[slug]/alta`, `/c/[slug]/tarjeta`,
 `/c/[slug]/politica`. Panel del local: `/panel`, `/panel/entrar`, `/panel/clientes`,
@@ -45,6 +55,16 @@ que la tasa se hunda justo en los meses en que el local crece.
 Las pruebas de punta a punta comparten la base de desarrollo y la semilla corre una sola vez, así
 que **no usar conteos absolutos** en las aserciones: las pruebas del cliente dan de alta clientes
 que luego ve el panel. Consultar el número en la base dentro de la prueba.
+
+Dos trampas de PostgreSQL ya pagadas, para no repetirlas:
+
+- **Capturar una violación de unicidad dentro de una transacción no sirve**: el statement fallido
+  aborta la transacción entera. Hay que usar `on conflict do nothing`, como hace `encolar`.
+- **Un índice único sobre una columna que admite nulos no restringe los nulos**, porque PostgreSQL
+  los considera distintos entre sí. La cola indexa `coalesce(cliente_id, local_id)` por eso.
+
+En Google Wallet, el aviso por cercanía va en `merchantLocations`. El campo `locations` está
+deprecado y ya no dispara avisos: hay una prueba que falla si alguien vuelve a usarlo.
 
 La página del tap suma un sello en un GET, y eso es deliberado: un chip NFC solo puede abrir una
 URL, no enviar un POST. Lo que lo hace seguro es la regla de un sello por día, que vuelve la

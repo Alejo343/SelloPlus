@@ -14,6 +14,7 @@ import { recordarCliente } from '@/lib/cookies-cliente';
 import { altaCliente } from '@/servicios/clientes';
 import { sumarSello } from '@/servicios/sellos';
 import { resolverLocalPorSlug, resolverTag } from '@/servicios/tags';
+import { encolar } from '@/servicios/wallet/cola';
 
 export interface EstadoFormulario {
   errores?: Record<string, string>;
@@ -64,6 +65,20 @@ export async function accionAlta(
     clienteId: resultado.cliente.id,
     localId: local.localId,
   });
+
+  /**
+   * Se prepara su tarjeta de Google Wallet. La clase del local se encola
+   * también: es idempotente, así que no importa que se encole en cada alta, y
+   * garantiza que exista antes del primer objeto que la referencia.
+   */
+  if (!resultado.yaExistia) {
+    await encolar({ localId: local.localId, tipo: 'crear_clase' });
+    await encolar({
+      localId: local.localId,
+      clienteId: resultado.cliente.id,
+      tipo: 'crear_objeto',
+    });
+  }
 
   // El cliente acaba de apoyar el celular: esta visita cuenta. Si ya tenía
   // sello hoy, `sumarSello` lo rechaza solo y no pasa nada.

@@ -20,6 +20,8 @@ export interface PropsTarjeta {
   localNombre: string;
   /** En formato internacional sin signos, para armar el enlace de WhatsApp */
   whatsappLocal?: string | null;
+  /** Enlace para añadir la tarjeta al wallet, si ya se generó */
+  enlaceWallet?: string | null;
 }
 
 export function Tarjeta({
@@ -28,6 +30,7 @@ export function Tarjeta({
   localSlug,
   localNombre,
   whatsappLocal,
+  enlaceWallet,
 }: PropsTarjeta) {
   const llenos = '●'.repeat(Math.min(estado.sellos, estado.objetivo));
   const vacios = '○'.repeat(estado.faltan);
@@ -54,6 +57,19 @@ export function Tarjeta({
         <p>
           Te {estado.faltan === 1 ? 'falta' : 'faltan'} {estado.faltan}{' '}
           {estado.faltan === 1 ? 'sello' : 'sellos'} para: {premio}
+        </p>
+      )}
+
+      {enlaceWallet && (
+        <p>
+          {/* Guardar la tarjeta en el wallet es OPCIONAL: si el cliente no lo
+              hace, sigue en el club igual y suma sellos sin problema. */}
+          <a href={enlaceWallet}>Guardar mi tarjeta en Google Wallet</a>
+          <br />
+          <small>
+            Así la tienes junto a tus tarjetas del celular, y te aparece cuando pasas cerca del
+            local. Es opcional.
+          </small>
         </p>
       )}
 

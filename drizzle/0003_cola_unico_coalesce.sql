@@ -1,0 +1,2 @@
+DROP INDEX "cola_wallet_pendiente_unico";--> statement-breakpoint
+CREATE UNIQUE INDEX "cola_wallet_pendiente_unico" ON "cola_wallet" USING btree (coalesce("cliente_id", "local_id"),"tipo") WHERE "cola_wallet"."estado" = 'pendiente';

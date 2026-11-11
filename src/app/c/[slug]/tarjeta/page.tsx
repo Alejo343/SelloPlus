@@ -13,6 +13,7 @@ import { clienteDeLaCookie } from '@/lib/cookies-cliente';
 import { obtenerCliente } from '@/servicios/clientes';
 import { estadoDelClub } from '@/servicios/sellos';
 import { resolverLocalPorSlug } from '@/servicios/tags';
+import { enlaceDeTarjeta } from '@/servicios/wallet/cola';
 
 import { Tarjeta } from './tarjeta';
 
@@ -37,7 +38,10 @@ export default async function PaginaTarjeta({ params }: PageProps<'/c/[slug]/tar
     );
   }
 
-  const estado = await estadoDelClub(cliente.id, local.sellosObjetivo);
+  const [estado, enlaceWallet] = await Promise.all([
+    estadoDelClub(cliente.id, local.sellosObjetivo),
+    enlaceDeTarjeta(cliente.id),
+  ]);
 
   return (
     <main>
@@ -50,6 +54,7 @@ export default async function PaginaTarjeta({ params }: PageProps<'/c/[slug]/tar
         localSlug={local.localSlug}
         localNombre={local.localNombre}
         whatsappLocal={local.whatsapp}
+        enlaceWallet={enlaceWallet}
       />
     </main>
   );

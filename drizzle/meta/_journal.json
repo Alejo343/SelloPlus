@@ -15,6 +15,20 @@
       "when": 1794355037160,
       "tag": "0001_sellos_canje",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794361371513,
+      "tag": "0002_cola_wallet",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1794361570086,
+      "tag": "0003_cola_unico_coalesce",
+      "breakpoints": true
     }
   ]
 }

@@ -14,6 +14,7 @@
  *    escribir por accidente una consulta que cruce locales.
  */
 
+import { sql } from 'drizzle-orm';
 import {
   boolean,
   date,
@@ -26,6 +27,7 @@ import {
   text,
   timestamp,
   unique,
+  uniqueIndex,
   uuid,
 } from 'drizzle-orm/pg-core';
 
@@ -327,6 +329,63 @@ export const mensajes = pgTable(
   ],
 );
 
+/* ------------------------------------------------------------ cola wallet */
+
+export const estadoSincronizacion = pgEnum('estado_sincronizacion', [
+  'pendiente',
+  'hecha',
+  'fallida',
+]);
+
+export const tipoSincronizacion = pgEnum('tipo_sincronizacion', [
+  'crear_clase',
+  'crear_objeto',
+  'actualizar_sellos',
+]);
+
+/**
+ * Cola de cambios por reflejar en Google Wallet.
+ *
+ * Existe porque Google es un servicio externo que puede estar caído o lento, y
+ * el tap tiene que responder en menos de 1,5 s delante del cliente (RNF-01).
+ * Sumar un sello encola, no llama: el sello queda guardado sí o sí, y la
+ * tarjeta del wallet se actualiza un momento después.
+ */
+export const colaWallet = pgTable(
+  'cola_wallet',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    localId: uuid('local_id')
+      .notNull()
+      .references(() => locales.id, { onDelete: 'cascade' }),
+    /** Null en 'crear_clase', que es del local y no de un cliente */
+    clienteId: uuid('cliente_id').references(() => clientes.id, { onDelete: 'cascade' }),
+    tipo: tipoSincronizacion('tipo').notNull(),
+    estado: estadoSincronizacion('estado').notNull().default('pendiente'),
+    intentos: smallint('intentos').notNull().default(0),
+    ultimoError: text('ultimo_error'),
+    creadoEn: timestamp('creado_en', { withTimezone: true }).notNull().defaultNow(),
+    procesadoEn: timestamp('procesado_en', { withTimezone: true }),
+  },
+  (t) => [
+    index('cola_wallet_estado_idx').on(t.estado, t.creadoEn),
+    /**
+     * Un solo cambio pendiente por destinatario y tipo: si el cliente suma un
+     * sello hoy y otro mañana antes de que la cola se procese, no hace falta
+     * mandar dos actualizaciones, porque la única que hay ya llevará el total
+     * correcto cuando corra.
+     *
+     * Se indexa `coalesce(cliente_id, local_id)` y no `cliente_id` a secas
+     * porque PostgreSQL considera dos nulos como distintos entre sí: con la
+     * columna cruda, los cambios de tipo 'crear_clase' (que no tienen cliente)
+     * se encolarían de nuevo en cada alta.
+     */
+    uniqueIndex('cola_wallet_pendiente_unico')
+      .on(sql`coalesce(${t.clienteId}, ${t.localId})`, t.tipo)
+      .where(sql`${t.estado} = 'pendiente'`),
+  ],
+);
+
 /* ---------------------------------------------------------- alertas fraude */
 
 /** RN-09: avisan, no bloquean. Fase 6. */
@@ -359,3 +418,5 @@ export type Sello = typeof sellos.$inferSelect;
 export type Canje = typeof canjes.$inferSelect;
 export type Mensaje = typeof mensajes.$inferSelect;
 export type UsuarioLocal = typeof usuariosLocal.$inferSelect;
+export type Tarjeta = typeof tarjetas.$inferSelect;
+export type ItemColaWallet = typeof colaWallet.$inferSelect;

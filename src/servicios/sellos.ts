@@ -24,6 +24,7 @@ import {
   type MotivoRechazo,
 } from '../dominio/sellos';
 import type { BaseDeDatos } from './tipos';
+import { encolar } from './wallet/cola';
 
 /* ------------------------------------------------------- estado del club */
 
@@ -160,11 +161,19 @@ export async function sumarSello(
     throw error;
   }
 
-  return {
-    resultado: 'sumado',
-    estado: await estadoDelClub(opciones.clienteId, opciones.sellosObjetivo, db),
-    dia: hoy,
-  };
+  const estado = await estadoDelClub(opciones.clienteId, opciones.sellosObjetivo, db);
+
+  /**
+   * Se encola, no se llama a Google: el tap corre delante del cliente y
+   * Google no tiene SLA. El sello ya está guardado; la tarjeta del wallet se
+   * actualiza unos segundos después (ver servicios/wallet/cola.ts).
+   */
+  await encolar(
+    { localId: opciones.localId, clienteId: opciones.clienteId, tipo: 'actualizar_sellos' },
+    db,
+  );
+
+  return { resultado: 'sumado', estado, dia: hoy };
 }
 
 /* --------------------------------------------------------------- canjear */
@@ -231,6 +240,12 @@ export async function canjear(
     const aConsumir = disponibles.slice(0, decision.sellosAUsar).map((s) => s.id);
 
     await tx.update(sellos).set({ canjeId: canje.id }).where(inArray(sellos.id, aConsumir));
+
+    // El canje baja los sellos: la tarjeta del wallet tiene que reflejarlo.
+    await encolar(
+      { localId: opciones.localId, clienteId: opciones.clienteId, tipo: 'actualizar_sellos' },
+      tx,
+    );
 
     return {
       resultado: 'canjeado',

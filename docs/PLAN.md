@@ -169,7 +169,18 @@ Puedes abrir una URL en tu celular, darte de alta y ver tu sello. Ya es demostra
 ---
 
 ### Fase 4 — Tarjeta en Google Wallet
-*Requiere que tengas la cuenta de emisor aprobada. Ver bloqueantes.*
+*Partida en dos, porque solo la segunda mitad depende de un trámite con espera.*
+
+**Fase 4A ✅ terminada el 2026-11-11 — la integración (no depende de nadie).** Todo el código, en modo simulado: construcción
+de la plantilla y del pase, firma del enlace "Añadir a Google Wallet", cola de actualizaciones y
+sus pruebas. Al terminar, basta poner credenciales para que funcione de verdad.
+
+**Fase 4B — emitir pases reales.** Necesita la cuenta de emisor de David y, para el acceso de
+publicación, el **sitio web de SelloPlus** con sus URLs de soporte (diferido hasta acá por decisión
+del 2026-11-11). Requisitos que Google revisa: Business Profile completo (nombre público, sitio
+web, URL/correo/teléfono de soporte, código MCC), perfil de pagos asociado, al menos una plantilla
+y un pase creados, y usuarios de prueba. En modo demo los pases funcionan, pero solo para cuentas
+de prueba y con la anotación "[TEST ONLY]".
 
 **Entregables**
 - Alta de `loyaltyclass` por local, con logo, colores y premio.
