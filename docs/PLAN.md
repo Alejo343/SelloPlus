@@ -254,6 +254,17 @@ es que estaban mal escritas y se arreglan.
 
 ---
 
+### Fase 10 — Cierre legal y comercial
+*Diferido a propósito: hace falta para firmar con un local real, no para que el sistema funcione.*
+
+- **Contrato de transmisión de datos** por local, que nombre al local como Responsable y a
+  SelloPlus como Encargado (RL-11).
+- Cubrir la **transmisión internacional** si el VPS está fuera de Colombia (RL-10).
+- Revisión por un abogado de la política de tratamiento y del contrato, antes del primer local
+  real. Yo puedo dejarlos redactados con la estructura correcta; la validación es de un
+  profesional.
+- Verificar si corresponde registro en el **RNBD** y de quién es la obligación.
+
 ### Fase 9 — Lo que lo hace vendible
 
 - Campañas masivas segmentadas ("Día de la pizza").

@@ -127,11 +127,12 @@ No son opcionales: el producto **es** una base de datos de personas.
 | RL-03 | Política de tratamiento de datos accesible, que diga quién responde, para qué se usan los datos y cómo pedir baja o corrección | 2 |
 | RL-04 | Vía efectiva para que el titular consulte, corrija o elimine sus datos | 5 |
 | RL-05 | Mecanismo de baja en todos los mensajes de marketing, y respetarlo | 5 |
-| RL-06 | **DECIDIDO (2026-11-11): actúas como ENCARGADO.** La base es del local, tú solo la procesas por su cuenta. Hace falta un contrato de transmisión de datos con cada local | 2 |
+| RL-06 | **DECIDIDO (2026-11-11): actúas como ENCARGADO.** La base es del local, tú solo la procesas por su cuenta. Se refleja en la política de tratamiento | 2 |
+| RL-11 | Contrato de transmisión de datos con cada local. **Diferido a la Fase 10**: hace falta para firmar con un local real, no para que el sistema funcione | 10 |
 | RL-07 | Evaluar si corresponde registrar las bases en el **RNBD** de la SIC | 2 |
 | RL-08 | Política de retención: cuánto tiempo se guardan los datos de un cliente inactivo | 5 |
 | RL-09 | **DECIDIDO (2026-11-11):** si un local deja de usar el servicio, se le entrega su base y se borra de nuestro lado. Hay que declararlo en la política y en el contrato | 2 |
-| RL-10 | Si el servidor está fuera de Colombia, los datos salen del país: hay que cubrir la transmisión internacional en el contrato con cada local. **Pendiente de confirmar dónde está el VPS** | 2 |
+| RL-10 | Si el servidor está fuera de Colombia, los datos salen del país: hay que cubrir la transmisión internacional en el contrato. **Pendiente de confirmar dónde está el VPS** | 10 |
 
 **RL-06 quedó decidido: ENCARGADO.** Consecuencias que se arrastran al resto del sistema:
 
@@ -143,8 +144,9 @@ No son opcionales: el producto **es** una base de datos de personas.
 - El registro en el RNBD, cuando aplique, le corresponde a cada local, no a nosotros.
 - La política de tratamiento tiene que nombrar al local como Responsable y a SelloPlus como
   Encargado, con los datos de contacto de los dos.
-- Hace falta un **contrato de transmisión de datos** por local. Eso no es una pantalla: es un
-  documento aparte que conviene que revise un abogado.
+- Hace falta un **contrato de transmisión de datos** por local. Eso no es una pantalla, sino un
+  documento aparte, y quedó **diferido a la Fase 10**. Lo que NO se difiere es la política de
+  tratamiento: ese texto va dentro del formulario y sin él no se puede guardar ningún dato.
 - No se pueden usar los datos de un local para nada propio sin una autorización adicional y
   específica. Si algún día se quiere una red de beneficios entre locales, es otro producto y otra
   autorización.

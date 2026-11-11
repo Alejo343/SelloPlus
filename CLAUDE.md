@@ -39,6 +39,8 @@ Antes de escribir una pantalla, leer las guías de rutas y formularios en
 - **Rol frente a los datos: SelloPlus es ENCARGADO**, cada local es el Responsable (Ley 1581 de
   2012). La autorización del formulario se pide **a nombre del local**, nunca de SelloPlus. Si un
   local se va, se le entrega su base y se borra. No usar datos de un local para fines propios.
+  La **política de tratamiento** va en la Fase 2, dentro del formulario. El **contrato** con cada
+  local está diferido a la Fase 10.
 
 ## Reglas al trabajar acá
 
