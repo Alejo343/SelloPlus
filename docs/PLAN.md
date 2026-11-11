@@ -124,7 +124,7 @@ pruebas, sin abrir un navegador.
 
 ---
 
-### Fase 2 — Pantallas públicas funcionales
+### Fase 2 — Pantallas públicas funcionales ✅ terminada el 2026-11-11
 *HTML crudo. Fea a propósito.*
 
 **Entregables**

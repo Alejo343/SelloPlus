@@ -14,10 +14,12 @@ Los reels originales con sus transcripciones están en
 
 ## Estado
 
-Fases 0 (cimientos) y 1 (núcleo de sellos) terminadas. Siguiente: **Fase 2 — pantallas
-públicas funcionales**, en HTML crudo y sin estilos.
+Fases 0, 1 y 2 terminadas. Siguiente: **Fase 3 — panel del local**.
 
-126 pruebas en verde: 75 unitarias del dominio y 51 de integración contra la base.
+135 pruebas en verde: 75 unitarias, 51 de integración y 9 de punta a punta en móvil simulado.
+
+Pantallas que ya funcionan: `/t/[token]` (el tap), `/c/[slug]/alta`, `/c/[slug]/tarjeta` y
+`/c/[slug]/politica`. Sin estilos a propósito; el diseño es la Fase 8.
 
 Lo que ya existe:
 
@@ -25,8 +27,13 @@ Lo que ya existe:
 - `src/servicios/` — lo que toca la base: `tags.ts`, `clientes.ts`, `sellos.ts`
 - `src/lib/sesion-cliente.ts` — cookie firmada que reconoce al cliente entre visitas
 
-Antes de escribir una pantalla, leer las guías de rutas y formularios en
-`node_modules/next/dist/docs/01-app/`: esta versión de Next no es la que conoces de memoria.
+En esta versión de Next, `params`, `searchParams` y `cookies()` son **promesas**: hay que
+esperarlas. Antes de escribir una pantalla nueva, leer la guía correspondiente en
+`node_modules/next/dist/docs/01-app/`.
+
+La página del tap suma un sello en un GET, y eso es deliberado: un chip NFC solo puede abrir una
+URL, no enviar un POST. Lo que lo hace seguro es la regla de un sello por día, que vuelve la
+operación idempotente. No "arreglarlo" convirtiéndolo en un POST: rompería el producto.
 
 ## Decisiones tomadas
 

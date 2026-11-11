@@ -11,6 +11,8 @@ const PUERTO = 3011;
 
 export default defineConfig({
   testDir: './tests/e2e',
+  // Siembra la base antes de correr, para arrancar siempre del mismo estado.
+  globalSetup: './tests/e2e/preparar.ts',
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: 0,

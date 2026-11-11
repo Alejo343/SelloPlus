@@ -22,6 +22,8 @@ export interface TagResuelto {
   localSlug: string;
   localNombre: string;
   zonaHoraria: string;
+  whatsapp: string | null;
+  googleMapsUrl: string | null;
   sellosObjetivo: number;
   premio: string;
   beneficioBienvenida: string | null;
@@ -51,6 +53,8 @@ export async function resolverTag(
       localSlug: locales.slug,
       localNombre: locales.nombre,
       zonaHoraria: locales.zonaHoraria,
+      whatsapp: locales.whatsapp,
+      googleMapsUrl: locales.googleMapsUrl,
       localActivo: locales.activo,
       sellosObjetivo: programas.sellosObjetivo,
       premio: programas.premio,
@@ -88,6 +92,8 @@ export async function resolverLocalPorSlug(
       localSlug: locales.slug,
       localNombre: locales.nombre,
       zonaHoraria: locales.zonaHoraria,
+      whatsapp: locales.whatsapp,
+      googleMapsUrl: locales.googleMapsUrl,
       localActivo: locales.activo,
       sellosObjetivo: programas.sellosObjetivo,
       premio: programas.premio,
