@@ -358,3 +358,44 @@ describe('el alta prepara la tarjeta del cliente', () => {
     expect(clases).toHaveLength(1);
   });
 });
+
+describe('el logo que Google exige', () => {
+  it('falla con un mensaje entendible si el local no tiene logo', async () => {
+    // Comprobado contra la API real el 2026-11-12: Google responde
+    // "LoyaltyClass cannot be created without a program logo". El mensaje
+    // nuestro tiene que decir qué hacer, no repetir el error de Google.
+    const sinLogo = await crearLocalDePrueba(base.db, { logoUrl: null });
+    delete process.env.WALLET_LOGO_POR_DEFECTO;
+
+    await encolar({ localId: sinLogo.localId, tipo: 'crear_clase' }, base.db);
+    const resultado = await procesarCola({}, base.db);
+
+    expect(resultado.fallidos).toBe(1);
+
+    const [item] = await base.db
+      .select()
+      .from(colaWallet)
+      .where(eq(colaWallet.localId, sinLogo.localId));
+
+    expect(item.ultimoError).toMatch(/logo/i);
+    expect(item.ultimoError).toMatch(/WALLET_LOGO_POR_DEFECTO/);
+  });
+
+  it('usa el logo de Sello Fiel cuando el local no tiene el suyo', async () => {
+    const sinLogo = await crearLocalDePrueba(base.db, { logoUrl: null });
+    process.env.WALLET_LOGO_POR_DEFECTO = 'https://sellofiel.test/logo.png';
+
+    try {
+      await encolar({ localId: sinLogo.localId, tipo: 'crear_clase' }, base.db);
+      const resultado = await procesarCola({}, base.db);
+
+      expect(resultado.fallidos).toBe(0);
+
+      const clase = emisor.llamadas.find((l) => l.operacion === 'crear_clase')!;
+      const cuerpo = clase.cuerpo as { programLogo: { sourceUri: { uri: string } } };
+      expect(cuerpo.programLogo.sourceUri.uri).toBe('https://sellofiel.test/logo.png');
+    } finally {
+      delete process.env.WALLET_LOGO_POR_DEFECTO;
+    }
+  });
+});

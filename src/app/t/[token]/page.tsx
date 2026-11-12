@@ -121,7 +121,7 @@ async function procesarTap(opciones: {
 export async function generateMetadata({ params }: PageProps<'/t/[token]'>) {
   const { token } = await params;
   const tag = await resolverTag(token);
-  return { title: tag ? `Club de ${tag.localNombre}` : 'SelloPlus' };
+  return { title: tag ? `Club de ${tag.localNombre}` : 'Sello Fiel' };
 }
 
 /** Una página que suma sellos nunca puede servirse desde caché. */

@@ -10,15 +10,15 @@ import { clientes, locales } from '../../src/db/schema';
  * El panel del local, en móvil simulado.
  *
  * Credenciales de la semilla:
- *   dueno@laesquina.test  / selloplus2026   (local 'la-esquina')
- *   dueno@cafevecino.test / selloplus2026   (local 'cafe-vecino')
+ *   dueno@laesquina.test  / sellofiel2026   (local 'la-esquina')
+ *   dueno@cafevecino.test / sellofiel2026   (local 'cafe-vecino')
  *
  * Clientes de la semilla que se usan:
  *   Lucía Nueva  — sin sellos, sirve para probar el sello manual
  *   Marta Fiel   — 8 de 10 sellos, con uno de hoy
  */
 
-const CLAVE = 'selloplus2026';
+const CLAVE = 'sellofiel2026';
 
 async function entrarAlPanel(
   page: import('@playwright/test').Page,

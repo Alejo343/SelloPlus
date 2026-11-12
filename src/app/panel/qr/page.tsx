@@ -98,5 +98,5 @@ export default async function PaginaQr() {
   );
 }
 
-export const metadata = { title: 'Códigos QR · SelloPlus' };
+export const metadata = { title: 'Códigos QR · Sello Fiel' };
 export const dynamic = 'force-dynamic';

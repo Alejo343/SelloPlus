@@ -1,4 +1,4 @@
-# SelloPlus — contexto del proyecto
+# Sello Fiel — contexto del proyecto
 
 Tarjeta de sellos digital en el wallet del celular, para locales gastronómicos. Réplica del
 sistema que venden `@menuly.ar` y `@marco.scaine` en Instagram.
@@ -35,7 +35,15 @@ Pantallas del cliente: `/t/[token]` (el tap), `/c/[slug]/alta`, `/c/[slug]/tarje
 Fase 8.
 
 Credenciales de la semilla para el panel (solo desarrollo):
-`dueno@laesquina.test` y `dueno@cafevecino.test`, contraseña `selloplus2026`.
+`dueno@laesquina.test` y `dueno@cafevecino.test`, contraseña `sellofiel2026`.
+
+**El producto se llama Sello Fiel** (renombrado el 2026-11-12; antes SelloPlus, que ya era marca
+registrada). El proyecto de Google Cloud y la cuenta de servicio conservan el nombre antiguo
+(`selloplus-wallet@selloplus.iam.gserviceaccount.com`): son identificadores internos y
+renombrarlos rompería las credenciales. No "arreglarlos".
+
+Las credenciales de Google Wallet viven en `~/.config/sellofiel/wallet.json` con permisos 600,
+fuera del repositorio, y el `.env` solo guarda la ruta.
 
 Lo que ya existe:
 
@@ -55,6 +63,15 @@ que la tasa se hunda justo en los meses en que el local crece.
 Las pruebas de punta a punta comparten la base de desarrollo y la semilla corre una sola vez, así
 que **no usar conteos absolutos** en las aserciones: las pruebas del cliente dan de alta clientes
 que luego ve el panel. Consultar el número en la base dentro de la prueba.
+
+**Las pruebas NUNCA deben usar el emisor real.** Con credenciales en el `.env`, `obtenerEmisor()`
+devuelve el de Google, y Google **no permite borrar plantillas ni pases**: cada corrida dejaría
+basura permanente en la cuenta. Toda prueba que procese la cola tiene que llamar antes a
+`fijarEmisor(crearEmisorSimulado())`.
+
+**Google exige logo** en la plantilla del local, aunque su documentación lo presente como
+opcional. Comprobado contra la API real el 2026-11-12: responde "LoyaltyClass cannot be created
+without a program logo". La URL tiene que ser pública, porque Google la descarga.
 
 Dos trampas de PostgreSQL ya pagadas, para no repetirlas:
 
@@ -78,8 +95,8 @@ operación idempotente. No "arreglarlo" convirtiéndolo en un POST: rompería el
 - **WhatsApp con links `wa.me`** que el local dispara a mano. Cloud API más adelante.
 - **Funcional antes que bonito.** Nada de estilos hasta la Fase 8. Las pantallas son HTML crudo
   a propósito; no "mejorar" el diseño sobre la marcha.
-- **Rol frente a los datos: SelloPlus es ENCARGADO**, cada local es el Responsable (Ley 1581 de
-  2012). La autorización del formulario se pide **a nombre del local**, nunca de SelloPlus. Si un
+- **Rol frente a los datos: Sello Fiel es ENCARGADO**, cada local es el Responsable (Ley 1581 de
+  2012). La autorización del formulario se pide **a nombre del local**, nunca de Sello Fiel. Si un
   local se va, se le entrega su base y se borra. No usar datos de un local para fines propios.
   La **política de tratamiento** va en la Fase 2, dentro del formulario. El **contrato** con cada
   local está diferido a la Fase 10.

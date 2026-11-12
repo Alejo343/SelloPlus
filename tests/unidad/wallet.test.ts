@@ -21,6 +21,7 @@ const DATOS_CLASE = {
   localNombre: 'La Esquina',
   premio: 'Una cena para dos',
   sellosObjetivo: 10,
+  logoUrl: 'https://ejemplo.test/logo.png',
 };
 
 const DATOS_OBJETO = {
@@ -30,7 +31,7 @@ const DATOS_OBJETO = {
   clienteNombre: 'Marta Fiel',
   estado: calcularEstado(7, 10),
   premio: 'Una cena para dos',
-  urlTarjeta: 'https://selloplus.test/c/la-esquina/tarjeta',
+  urlTarjeta: 'https://sellofiel.test/c/la-esquina/tarjeta',
 };
 
 describe('identificadores', () => {
@@ -101,11 +102,17 @@ describe('construirClase', () => {
     expect(enlaces.uris[0].uri).toBe('https://wa.me/573001112233');
   });
 
-  it('omite el logo si el local no tiene', () => {
-    expect(construirClase(DATOS_CLASE).programLogo).toBeUndefined();
-    expect(
-      construirClase({ ...DATOS_CLASE, logoUrl: 'https://ejemplo.test/logo.png' }).programLogo,
-    ).toBeDefined();
+  it('exige logo, porque Google rechaza la plantilla sin él', () => {
+    // Comprobado contra la API real: "LoyaltyClass cannot be created without
+    // a program logo". La documentación lo presenta como opcional y NO lo es.
+    expect(() => construirClase({ ...DATOS_CLASE, logoUrl: null })).toThrow(/logo/i);
+    expect(() => construirClase({ ...DATOS_CLASE, logoUrl: undefined })).toThrow(/logo/i);
+  });
+
+  it('incluye el logo con su descripción accesible', () => {
+    const clase = construirClase(DATOS_CLASE);
+    const logo = clase.programLogo as { sourceUri: { uri: string } };
+    expect(logo.sourceUri.uri).toBe('https://ejemplo.test/logo.png');
   });
 });
 
@@ -164,15 +171,15 @@ describe('construirParcheSellos', () => {
 describe('construirCargaJwt', () => {
   it('lleva los valores fijos que exige Google', () => {
     const carga = construirCargaJwt({
-      cuentaServicioEmail: 'selloplus@proyecto.iam.gserviceaccount.com',
+      cuentaServicioEmail: 'sellofiel@proyecto.iam.gserviceaccount.com',
       objeto: construirObjeto(DATOS_OBJETO),
-      origenes: ['https://selloplus.test'],
+      origenes: ['https://sellofiel.test'],
       ahora: new Date('2026-11-11T12:00:00Z'),
     });
 
     expect(carga.aud).toBe('google');
     expect(carga.typ).toBe('savetowallet');
-    expect(carga.iss).toBe('selloplus@proyecto.iam.gserviceaccount.com');
+    expect(carga.iss).toBe('sellofiel@proyecto.iam.gserviceaccount.com');
     expect(carga.iat).toBe(Math.floor(Date.UTC(2026, 10, 11, 12) / 1000));
   });
 
@@ -180,10 +187,10 @@ describe('construirCargaJwt', () => {
     const carga = construirCargaJwt({
       cuentaServicioEmail: 'x@y.iam.gserviceaccount.com',
       objeto: construirObjeto(DATOS_OBJETO),
-      origenes: ['https://selloplus.test', 'https://www.selloplus.test'],
+      origenes: ['https://sellofiel.test', 'https://www.sellofiel.test'],
     });
 
-    expect(carga.origins).toEqual(['https://selloplus.test', 'https://www.selloplus.test']);
+    expect(carga.origins).toEqual(['https://sellofiel.test', 'https://www.sellofiel.test']);
   });
 
   it('mete el objeto dentro de loyaltyObjects', () => {

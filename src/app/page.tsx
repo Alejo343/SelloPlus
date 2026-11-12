@@ -5,7 +5,7 @@
 export default function Inicio() {
   return (
     <main>
-      <h1>SelloPlus</h1>
+      <h1>Sello Fiel</h1>
       <p>Tarjeta de sellos digital para locales gastronómicos.</p>
       <p>
         Para unirte al club de un local, escanea su código QR o apoya tu celular en su chip.

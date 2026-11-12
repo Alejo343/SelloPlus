@@ -218,7 +218,7 @@ Esto en Argentina lo manejan suelto, pero acá el producto **es** una base de da
 - Las bases de datos personales se **registran en el RNBD** de la SIC según el tamaño del
   responsable. Hay que verificar si aplica a cada local o a ti.
 
-**Decidido el 2026-11-11: SelloPlus actúa como ENCARGADO**, y cada local es el Responsable de su
+**Decidido el 2026-11-11: Sello Fiel actúa como ENCARGADO**, y cada local es el Responsable de su
 base. La autorización se pide a nombre del local. Si un local se va, se le entrega su base y se
 borra de nuestro lado, y eso se declara desde el principio: es además el mejor argumento de venta,
 porque sus clientes son suyos y se los puede llevar.

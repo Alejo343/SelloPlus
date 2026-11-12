@@ -2,7 +2,7 @@
  * Procesa la cola de sincronización con Google Wallet.
  *
  * Pensado para correr por cron, cada minuto:
- *   * * * * * cd /ruta/al/proyecto && npm run wallet:procesar >> /var/log/selloplus-wallet.log 2>&1
+ *   * * * * * cd /ruta/al/proyecto && npm run wallet:procesar >> /var/log/sellofiel-wallet.log 2>&1
  *
  * Es seguro ejecutarlo de nuevo si falla: la cola solo marca como hecho lo que
  * se completó, y reintenta lo demás hasta cinco veces.

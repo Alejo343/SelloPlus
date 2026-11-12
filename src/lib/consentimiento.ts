@@ -6,9 +6,9 @@
  * exactamente lo que dice la política, y la versión que se guarda con cada
  * cliente (RL-02) se refiere a este contenido.
  *
- * Decisión de RL-06: SelloPlus es **Encargado** del tratamiento; el
+ * Decisión de RL-06: Sello Fiel es **Encargado** del tratamiento; el
  * **Responsable** es cada local. Por eso la autorización se pide a nombre del
- * local y no de SelloPlus: el cliente le está dando sus datos al restaurante
+ * local y no de Sello Fiel: el cliente le está dando sus datos al restaurante
  * donde está comiendo, que es lo correcto legalmente y lo que menos fricción
  * genera.
  *
@@ -20,7 +20,7 @@
 /** Se guarda con cada cliente. Cambiar SOLO si cambia el texto de abajo. */
 export const VERSION_CONSENTIMIENTO = process.env.CONSENTIMIENTO_VERSION ?? '2026-11-v1';
 
-export const NOMBRE_PLATAFORMA = 'SelloPlus';
+export const NOMBRE_PLATAFORMA = 'Sello Fiel';
 
 /** La frase de la casilla del formulario. Corta a propósito: nadie lee un párrafo. */
 export function textoCasilla(nombreLocal: string): string {

@@ -40,5 +40,5 @@ export default async function PaginaAlta({ params, searchParams }: PageProps<'/c
 export async function generateMetadata({ params }: PageProps<'/c/[slug]/alta'>) {
   const { slug } = await params;
   const local = await resolverLocalPorSlug(slug);
-  return { title: local ? `Unirme al club de ${local.localNombre}` : 'SelloPlus' };
+  return { title: local ? `Unirme al club de ${local.localNombre}` : 'Sello Fiel' };
 }

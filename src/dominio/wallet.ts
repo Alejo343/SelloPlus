@@ -47,11 +47,25 @@ export interface DatosClase {
   lng?: string | null;
   /** Enlace para que el cliente pida o reserve */
   whatsapp?: string | null;
+  /**
+   * OBLIGATORIO. Google rechaza la clase sin logo con el mensaje
+   * "LoyaltyClass cannot be created without a program logo", aunque su
+   * documentación lo presenta como opcional. Comprobado contra la API real el
+   * 2026-11-12. Tiene que ser una URL pública: Google la descarga.
+   */
   logoUrl?: string | null;
   colorPrimario?: string | null;
 }
 
 export function construirClase(datos: DatosClase) {
+  if (!datos.logoUrl) {
+    throw new Error(
+      `El local "${datos.localNombre}" no tiene logo, y Google Wallet lo exige para crear la ` +
+        'plantilla. Configura el logo del local, o define WALLET_LOGO_POR_DEFECTO con una URL ' +
+        'pública.',
+    );
+  }
+
   const clase: Record<string, unknown> = {
     id: idDeClase(datos.issuerId, datos.localId),
     issuerName: datos.localNombre,
@@ -72,14 +86,12 @@ export function construirClase(datos: DatosClase) {
     ],
   };
 
-  if (datos.logoUrl) {
-    clase.programLogo = {
-      sourceUri: { uri: datos.logoUrl },
-      contentDescription: {
-        defaultValue: { language: 'es', value: `Logo de ${datos.localNombre}` },
-      },
-    };
-  }
+  clase.programLogo = {
+    sourceUri: { uri: datos.logoUrl },
+    contentDescription: {
+      defaultValue: { language: 'es', value: `Logo de ${datos.localNombre}` },
+    },
+  };
 
   /**
    * El aviso por cercanía.

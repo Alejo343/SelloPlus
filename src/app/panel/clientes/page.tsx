@@ -72,5 +72,5 @@ export default async function PaginaClientes({ searchParams }: PageProps<'/panel
   );
 }
 
-export const metadata = { title: 'Mis clientes · SelloPlus' };
+export const metadata = { title: 'Mis clientes · Sello Fiel' };
 export const dynamic = 'force-dynamic';

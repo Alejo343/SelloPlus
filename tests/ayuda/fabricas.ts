@@ -27,6 +27,8 @@ export async function crearLocalDePrueba(
     premio?: string;
     zonaHoraria?: string;
     tagActivo?: boolean;
+    /** Null a propósito para probar el caso sin logo, que Google rechaza */
+    logoUrl?: string | null;
   } = {},
 ): Promise<LocalDePrueba> {
   const slug = opciones.slug ?? `local-${Math.random().toString(36).slice(2, 10)}`;
@@ -36,7 +38,14 @@ export async function crearLocalDePrueba(
 
   const [local] = await db
     .insert(locales)
-    .values({ slug, nombre: slug, zonaHoraria })
+    .values({
+      slug,
+      nombre: slug,
+      zonaHoraria,
+      // Google Wallet exige logo para crear la plantilla, así que los locales
+      // de prueba traen uno salvo que la prueba pida explícitamente lo contrario.
+      logoUrl: opciones.logoUrl === undefined ? 'https://ejemplo.test/logo.png' : opciones.logoUrl,
+    })
     .returning({ id: locales.id });
 
   await db.insert(programas).values({ localId: local.id, sellosObjetivo, premio });

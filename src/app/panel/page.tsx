@@ -94,5 +94,5 @@ export default async function PaginaPanel() {
   );
 }
 
-export const metadata = { title: 'Panel · SelloPlus' };
+export const metadata = { title: 'Panel · Sello Fiel' };
 export const dynamic = 'force-dynamic';

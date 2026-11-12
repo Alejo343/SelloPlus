@@ -1,4 +1,4 @@
-# SelloPlus
+# Sello Fiel
 
 Tarjeta de fidelización digital para locales gastronómicos. El cliente suma sellos apoyando el
 celular en un chip NFC o escaneando un QR, y la tarjeta le queda guardada en el wallet del
@@ -48,8 +48,8 @@ El código está en español: tablas, columnas, funciones y pruebas. Las reglas 
 Hace falta Node 22 y PostgreSQL con dos bases:
 
 ```bash
-sudo -u postgres psql -c "CREATE DATABASE selloplus_dev OWNER tu_usuario;"
-sudo -u postgres psql -c "CREATE DATABASE selloplus_test OWNER tu_usuario;"
+sudo -u postgres psql -c "CREATE DATABASE fidelizacion_dev OWNER tu_usuario;"
+sudo -u postgres psql -c "CREATE DATABASE fidelizacion_test OWNER tu_usuario;"
 
 cp .env.example .env     # ajusta las URLs si no usas socket Unix
 npm install

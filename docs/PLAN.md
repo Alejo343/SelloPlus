@@ -176,7 +176,7 @@ de la plantilla y del pase, firma del enlace "Añadir a Google Wallet", cola de 
 sus pruebas. Al terminar, basta poner credenciales para que funcione de verdad.
 
 **Fase 4B — emitir pases reales.** Necesita la cuenta de emisor de David y, para el acceso de
-publicación, el **sitio web de SelloPlus** con sus URLs de soporte (diferido hasta acá por decisión
+publicación, el **sitio web de Sello Fiel** con sus URLs de soporte (diferido hasta acá por decisión
 del 2026-11-11). Requisitos que Google revisa: Business Profile completo (nombre público, sitio
 web, URL/correo/teléfono de soporte, código MCC), perfil de pagos asociado, al menos una plantilla
 y un pase creados, y usuarios de prueba. En modo demo los pases funcionan, pero solo para cuentas
@@ -271,7 +271,7 @@ es que estaban mal escritas y se arreglan.
 *Diferido a propósito: hace falta para firmar con un local real, no para que el sistema funcione.*
 
 - **Contrato de transmisión de datos** por local, que nombre al local como Responsable y a
-  SelloPlus como Encargado (RL-11).
+  Sello Fiel como Encargado (RL-11).
 - Cubrir la **transmisión internacional** si el VPS está fuera de Colombia (RL-10).
 - Revisión por un abogado de la política de tratamiento y del contrato, antes del primer local
   real. Yo puedo dejarlos redactados con la estructura correcta; la validación es de un

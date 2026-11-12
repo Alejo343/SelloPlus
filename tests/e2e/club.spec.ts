@@ -4,6 +4,7 @@ import { expect, test } from '@playwright/test';
 
 import { crearConexion } from '../../src/db';
 import { procesarCola } from '../../src/servicios/wallet/cola';
+import { crearEmisorSimulado, fijarEmisor } from '../../src/servicios/wallet/emisor';
 
 /**
  * Los recorridos del cliente, en un móvil simulado.
@@ -129,14 +130,14 @@ test('un tag inexistente da 404 y no revela nada', async ({ page }) => {
   expect(respuesta?.status()).toBe(404);
 });
 
-test('la política nombra al local como responsable y a SelloPlus como encargado', async ({
+test('la política nombra al local como responsable y a Sello Fiel como encargado', async ({
   page,
 }) => {
   await page.goto('/c/la-esquina/politica');
 
   // Es la consecuencia visible de la decisión RL-06.
   await expect(page.getByText(/La Esquina es el Responsable/i)).toBeVisible();
-  await expect(page.getByText(/SelloPlus es solo el Encargado/i)).toBeVisible();
+  await expect(page.getByText(/Sello Fiel es solo el Encargado/i)).toBeVisible();
 
   // Las secciones que la Ley 1581 exige.
   for (const titulo of [
@@ -175,6 +176,15 @@ test('tras procesar la cola, aparece el botón de guardar en Google Wallet', asy
   // encola, para que el tap no tenga que esperar a Google (RNF-01).
   await expect(page.getByRole('link', { name: /google wallet/i })).toHaveCount(0);
 
+  /**
+   * Se fuerza el emisor simulado ANTES de procesar.
+   *
+   * Sin esto, con credenciales reales en el .env, esta prueba crearía
+   * plantillas y pases de verdad en la cuenta de emisor de Google. Y Google
+   * NO permite borrarlos: cada corrida dejaría basura permanente.
+   */
+  fijarEmisor(crearEmisorSimulado());
+
   // Es lo que hace el cron cada minuto.
   const { cliente: sql, db } = crearConexion(process.env.DATABASE_URL, 1);
   try {
@@ -182,6 +192,7 @@ test('tras procesar la cola, aparece el botón de guardar en Google Wallet', asy
     expect(resultado.fallidos).toBe(0);
   } finally {
     await sql.end();
+    fijarEmisor(null);
   }
 
   await page.reload();

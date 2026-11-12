@@ -152,5 +152,5 @@ export default async function PaginaPrograma({ searchParams }: PageProps<'/panel
   );
 }
 
-export const metadata = { title: 'Configurar el club · SelloPlus' };
+export const metadata = { title: 'Configurar el club · Sello Fiel' };
 export const dynamic = 'force-dynamic';

@@ -6,7 +6,7 @@
  * en `src/lib/consentimiento.ts` para que no pueda desincronizarse de la
  * frase de la casilla.
  *
- * El Responsable es el local; SelloPlus es solo el Encargado (RL-06).
+ * El Responsable es el local; Sello Fiel es solo el Encargado (RL-06).
  */
 
 import { notFound } from 'next/navigation';
@@ -53,6 +53,6 @@ export async function generateMetadata({ params }: PageProps<'/c/[slug]/politica
   const { slug } = await params;
   const local = await resolverLocalPorSlug(slug);
   return {
-    title: local ? `Tratamiento de datos · ${local.localNombre}` : 'SelloPlus',
+    title: local ? `Tratamiento de datos · ${local.localNombre}` : 'Sello Fiel',
   };
 }

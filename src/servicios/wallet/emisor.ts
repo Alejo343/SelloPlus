@@ -17,6 +17,8 @@
  * todavía no hay cuenta de emisor. Hay que verificarla a mano en la Fase 4B.
  */
 
+import { readFileSync } from 'node:fs';
+
 import {
   construirClase,
   construirObjeto,
@@ -97,7 +99,7 @@ export function crearEmisorSimulado(issuerIdFalso = 'SIMULADO'): EmisorSimulado 
         cuerpo,
       });
       // Enlace reconocible como falso: si aparece en producción, se nota.
-      return { enlace: `https://simulado.selloplus.local/wallet/${issuerIdFalso}/${datos.clienteId}` };
+      return { enlace: `https://simulado.sellofiel.local/wallet/${issuerIdFalso}/${datos.clienteId}` };
     },
 
     async actualizarSellos({ issuerId, clienteId, estado, premio }) {
@@ -236,10 +238,41 @@ export function crearEmisorGoogle(config: ConfiguracionEmisor): Emisor {
 
 export function leerConfiguracionDelEntorno(): ConfiguracionEmisor | null {
   const issuerId = process.env.WALLET_ISSUER_ID;
-  const cuentaServicioEmail = process.env.WALLET_CUENTA_SERVICIO_EMAIL;
-  const clavePrivada = process.env.WALLET_CLAVE_PRIVADA;
+  if (!issuerId) return null;
 
-  if (!issuerId || !cuentaServicioEmail || !clavePrivada) return null;
+  /**
+   * Las credenciales se leen del JSON que descarga Google, por ruta, y no de
+   * una variable con la clave dentro. Dos motivos: el archivo vive fuera del
+   * repositorio con permisos 600, y así no hay que pelear con los saltos de
+   * línea de la clave al meterla en un .env, que es la fuente de error más
+   * común al configurar esto.
+   */
+  const rutaCredenciales = process.env.WALLET_CREDENCIALES_ARCHIVO;
+
+  let cuentaServicioEmail = process.env.WALLET_CUENTA_SERVICIO_EMAIL;
+  let clavePrivada = process.env.WALLET_CLAVE_PRIVADA;
+
+  if (rutaCredenciales) {
+    try {
+      const contenido = readFileSync(rutaCredenciales, 'utf8');
+      const credenciales = JSON.parse(contenido) as {
+        client_email?: string;
+        private_key?: string;
+      };
+      cuentaServicioEmail = credenciales.client_email ?? cuentaServicioEmail;
+      clavePrivada = credenciales.private_key ?? clavePrivada;
+    } catch (error) {
+      // Si la ruta está puesta pero el archivo no se puede leer, es mejor
+      // fallar ruidosamente que caer en silencio al modo simulado y que
+      // alguien crea que está emitiendo pases reales.
+      throw new Error(
+        `No se pudieron leer las credenciales de Google Wallet en ${rutaCredenciales}: ` +
+          (error instanceof Error ? error.message : String(error)),
+      );
+    }
+  }
+
+  if (!cuentaServicioEmail || !clavePrivada) return null;
 
   const origenes = (process.env.URL_PUBLICA ?? 'http://localhost:3011')
     .split(',')

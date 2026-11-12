@@ -165,7 +165,9 @@ async function ejecutar(
       lat: local.lat,
       lng: local.lng,
       whatsapp: local.whatsapp,
-      logoUrl: local.logoUrl,
+      // Google exige logo. Si el local no configuró el suyo, se usa el de
+      // Sello Fiel para no bloquear la creación de la plantilla.
+      logoUrl: local.logoUrl ?? process.env.WALLET_LOGO_POR_DEFECTO ?? null,
       colorPrimario: local.colorPrimario,
     });
     return true;

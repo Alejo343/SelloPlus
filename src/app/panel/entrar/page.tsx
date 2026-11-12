@@ -18,11 +18,11 @@ export default async function PaginaEntrar() {
 
   return (
     <main>
-      <h1>Panel de SelloPlus</h1>
+      <h1>Panel de Sello Fiel</h1>
       <p>Entra para ver tus clientes y tus métricas.</p>
       <FormularioEntrar />
     </main>
   );
 }
 
-export const metadata = { title: 'Entrar al panel · SelloPlus' };
+export const metadata = { title: 'Entrar al panel · Sello Fiel' };

@@ -136,13 +136,13 @@ No son opcionales: el producto **es** una base de datos de personas.
 
 **RL-06 quedó decidido: ENCARGADO.** Consecuencias que se arrastran al resto del sistema:
 
-- La autorización del cliente se pide **a nombre del local**, no de SelloPlus. En el formulario el
+- La autorización del cliente se pide **a nombre del local**, no de Sello Fiel. En el formulario el
   titular le está dando sus datos a "La Esquina", no a una empresa que no conoce. Es también lo
   que menos fricción genera y lo que más gente completa.
 - Cada local es quien responde ante la SIC por el uso que le dé a su base. A nosotros nos
   corresponde la seguridad de la plataforma y la confidencialidad.
 - El registro en el RNBD, cuando aplique, le corresponde a cada local, no a nosotros.
-- La política de tratamiento tiene que nombrar al local como Responsable y a SelloPlus como
+- La política de tratamiento tiene que nombrar al local como Responsable y a Sello Fiel como
   Encargado, con los datos de contacto de los dos.
 - Hace falta un **contrato de transmisión de datos** por local. Eso no es una pantalla, sino un
   documento aparte, y quedó **diferido a la Fase 10**. Lo que NO se difiere es la política de
