@@ -223,6 +223,11 @@ de prueba y con la anotación "[TEST ONLY]".
 ### Fase 6 — Antifraude
 
 **Entregables**
+- **Separar los tags por tipo** (RN-10). Un QR impreso fijo pasa a servir SOLO para unirse al
+  club; no suma sellos. Hoy sí lo hace, y es un hueco: la URL es estática y se fotografía.
+- **QR rotativo** para locales sin NFC (RN-11): el local tiene abierta en una pantalla o celular
+  de la caja una página que regenera el código cada pocos segundos. El código lleva una firma
+  sobre la ventana de tiempo y un secreto del tag, así que una foto deja de servir enseguida.
 - Validación del contador del chip: un contador repetido o viejo se rechaza y se registra.
 - Reglas de alerta: sellos en ráfaga, muchos clientes nuevos en pocos minutos, canjes fuera del
   horario del local.
@@ -239,8 +244,10 @@ de prueba y con la anotación "[TEST ONLY]".
 *La única fase con costo en hardware y con pasos fuera de la pantalla.*
 
 **Entregables**
-- Arrancar con **NTAG213 + token rotativo del lado del servidor**: barato, se consigue local y no
-  hace falta ninguna app para grabarlo. Suficiente mientras no haya fraude real.
+- Arrancar con **NTAG213**: barato, se consigue local y no hace falta ninguna app para grabarlo.
+  **Pero no es más seguro que un QR impreso**: guarda una URL fija que cualquier celular con NFC
+  puede leer y reutilizar. Sirve por comodidad del mozo, no por seguridad. La defensa mientras
+  tanto son el sello por día y las alertas de la Fase 6.
 - Procedimiento escrito de grabado de tags y de alta en el panel.
 - Prueba en Android y en iPhone, documentando la diferencia: Android abre directo, iPhone muestra
   una notificación que hay que tocar.

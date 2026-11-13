@@ -94,6 +94,8 @@ lo que se diseñe tiene que pasar ese filtro.
 | RN-07 | El mensaje de post-visita se dispara **2 horas** después del sello | 5 |
 | RN-08 | Un cliente dado de baja nunca entra en ninguna selección de mensajes | 5 |
 | RN-09 | Las alertas de fraude **avisan, no bloquean** | 6 |
+| RN-10 | Un **QR impreso fijo NO puede sumar sellos**: solo sirve para unirse al club. El sello exige un mecanismo que no se pueda copiar con una foto | 6 |
+| RN-11 | Para locales sin NFC, el sello por QR exige un **código rotativo** mostrado en el local, válido unos segundos | 6 |
 
 ---
 
@@ -113,6 +115,7 @@ lo que se diseñe tiene que pasar ese filtro.
 | RNF-10 | Todo en **español**, moneda COP, fechas en formato local | Mercado colombiano |
 | RNF-11 | Costo de operación cercano a cero en las primeras fases | No hay ingresos todavía |
 | RNF-12 | Contraste y tamaños accesibles; se usa con una mano, de pie, en un salón con poca luz | Contexto real de uso |
+| RNF-13 | El mecanismo que suma un sello tiene que **resistir que lo copien**: una foto del QR, o la lectura del chip con otro celular, no pueden servir para sumar desde casa | Sin esto, el programa regala premios y, peor, **ensucia la tasa de retorno**, que es el producto que se vende |
 
 ---
 
@@ -188,7 +191,17 @@ Verificadas el 2026-11-10. Condicionan lo que se le puede prometer a un local.
 6. **Los links `wa.me` no escalan**: alguien del local tiene que hacer clic en cada mensaje. Sirve
    para validar que los mensajes funcionan, no para cien locales.
 7. **Un sello por día** es una decisión de producto, no una limitación: es la defensa antifraude
-   más efectiva y la más barata.
+   más efectiva y la más barata. Pero **limita el abuso, no lo impide**: quien copie el mecanismo
+   puede sumar un sello diario desde su casa, y llegar al premio en diez días sin pisar el local.
+
+8. **Un QR impreso fijo es copiable con una foto.** Es una URL estática: cualquiera la fotografía,
+   la guarda y la abre desde donde quiera. Detectado el 2026-11-13.
+
+9. **Un chip NTAG213 tiene exactamente el mismo problema.** Es una idea contraintuitiva y conviene
+   tenerla clara: el chip barato guarda una URL fija, y cualquier celular con NFC puede leerla y
+   reutilizarla después. Lo único que resuelve esto de raíz es el **NTAG 424 DNA con SUN**, que
+   genera un código distinto en cada toque. Es decir, el plan de "empezar con NTAG213" comparte la
+   debilidad del QR impreso, no es más seguro por ser NFC.
 
 ---
 

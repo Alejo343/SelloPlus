@@ -34,6 +34,41 @@ Pantallas del cliente: `/t/[token]` (el tap), `/c/[slug]/alta`, `/c/[slug]/tarje
 `/panel/clientes/[id]`, `/panel/programa`, `/panel/qr`. Sin estilos a propósito; el diseño es la
 Fase 8.
 
+`diseno/landing.html` es la **página de venta** (Fase 9), un HTML independiente y autocontenido:
+no es parte de la app y no toca `src/`. Fija la identidad visual que debe seguir la Fase 8
+(coral #E4573D, azul noche #1F2A44, crema #FBF5EC, Fraunces + Inter) a partir del logo que
+eligió David. Decidido el 2026-11-12: la sección de planes **no muestra precios** (se cotiza
+caso por caso). Contacto real: WhatsApp +57 305 235 2080 y davidalejangp@gmail.com.
+
+La landing está **en vivo en https://sellofiel.app** (y `www`) desde el 2026-11-13, y
+**se edita directamente en `/var/www/sellofiel/index.html`**. No hay copia en este repo: la
+hubo hasta el 2026-11-13 y David la mandó quitar, porque mantener dos archivos iguales
+sincronizados a mano es un error esperando a pasar. `diseno/` solo guarda un README que
+apunta allá.
+
+Cada cambio queda en vivo al guardar, así que la red de seguridad es **git**, con el repo
+dentro de la carpeta (`/var/www/sellofiel/.git`), como el resto de los sitios del VPS. Se usa
+`git` normal desde `/var/www/sellofiel`.
+
+Flujo: editar `index.html` → `git diff` → verificar con
+`curl -s https://sellofiel.app | grep ...` que lo servido sea lo esperado →
+`git add -A && git commit -m "..."`. Si algo sale mal, `git checkout -- index.html`.
+
+**El `.git` está bloqueado al público** por una regla `rewrite` en el vhost
+(`RewriteRule ^/?\.git(/|$) - [F,L]`), que devuelve 403. Sin esa regla, cualquiera se
+descarga el repositorio entero desde internet. Comprobado el 2026-11-13: `accessDenyDir`
+solo cubre el primer nivel de la carpeta, y el `.htaccess` no se aplica en este
+OpenLiteSpeed; la regla `rewrite` del vhost es la única que funciona. Si algún día se crea
+otro sitio con git adentro, hay que copiarle esa regla y **verificar con curl**, no asumir.
+
+Montaje en el VPS: vhost `sellofiel` en OpenLiteSpeed (`conf/vhosts/sellofiel/vhconf.conf`,
+sin PHP), mapeado en los listeners `Default` y `Defaultssl`, con certificado Let's Encrypt de
+`/etc/letsencrypt/live/sellofiel.app/`. El TLD `.app` es HSTS preload: sin HTTPS el navegador
+ni siquiera abre la página. Respaldos de `httpd_config.conf` en `/home/claude/respaldos/lsws/`.
+
+Cuando llegue el momento de publicar la app (panel y pantallas del cliente), hay que decidir
+dónde: `app.sellofiel.app` o `/panel` del mismo dominio. Sin decidir.
+
 Credenciales de la semilla para el panel (solo desarrollo):
 `dueno@laesquina.test` y `dueno@cafevecino.test`, contraseña `sellofiel2026`.
 
